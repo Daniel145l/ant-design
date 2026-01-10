@@ -1,17 +1,17 @@
-import type { CSSProperties } from 'react';
-import React, { useCallback, useMemo, useState } from 'react';
 import Icon, * as AntdIcons from '@ant-design/icons';
 import { Affix, Empty, Input, Segmented } from 'antd';
 import { createStyles, useTheme } from 'antd-style';
 import type { SegmentedOptions } from 'antd/es/segmented';
 import { useIntl } from 'dumi';
 import debounce from 'lodash/debounce';
+import type { CSSProperties } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import Category from './Category';
 import type { CategoriesKeys } from './fields';
 import { all, categories } from './fields';
-import metaInfo from './meta';
 import type { IconName, IconsMeta } from './meta';
+import metaInfo from './meta';
 import { FilledIcon, OutlinedIcon, TwoToneIcon } from './themeIcons';
 
 export enum ThemeType {
@@ -20,7 +20,7 @@ export enum ThemeType {
   TwoTone = 'TwoTone',
 }
 
-const allIcons: { [key: string]: any } = AntdIcons;
+const allIcons: Record<string, React.ComponentType> = AntdIcons;
 
 const useStyle = createStyles(({ css, cssVar }) => ({
   iconSearchAffix: css`
