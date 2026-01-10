@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
 import { HomeOutlined } from '@ant-design/icons';
 import { Button, Result } from 'antd';
 import { useLocation } from 'dumi';
+import React, { useEffect } from 'react';
 
 import Link from '../../theme/common/Link';
 import * as utils from '../../theme/utils';
@@ -33,7 +33,7 @@ const NotFoundPage: React.FC<NotFoundProps> = ({ router }) => {
     }
 
     // Report if necessary
-    const { yuyanMonitor } = window as any;
+    const { yuyanMonitor } = window;
     yuyanMonitor?.log({
       code: 11,
       msg: `Page not found: ${location.href}; Source: ${document.referrer}`,
