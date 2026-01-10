@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { defaultAlgorithm, defaultTheme } from '@ant-design/compatible';
 import { FastColor } from '@ant-design/fast-color';
 import {
@@ -24,6 +23,7 @@ import { createStyles } from 'antd-style';
 import { generateColor } from 'antd/es/color-picker/util';
 import { clsx } from 'clsx';
 import { useLocation } from 'dumi';
+import * as React from 'react';
 
 import useLocale from '../../../../hooks/useLocale';
 import LinkButton from '../../../../theme/common/LinkButton';
@@ -40,7 +40,7 @@ import RadiusPicker from './RadiusPicker';
 import type { THEME } from './ThemePicker';
 import ThemePicker from './ThemePicker';
 
-type Color = Extract<GetProp<ColorPickerProps, 'value'>, string | { cleared: any }>;
+type Color = Extract<GetProp<ColorPickerProps, 'value'>, string | { cleared: boolean }>;
 
 const { Header, Content, Sider } = Layout;
 
