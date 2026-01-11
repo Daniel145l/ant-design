@@ -1,7 +1,7 @@
-import React from 'react';
 import { toArray } from '@rc-component/util';
 import { Image } from 'antd';
 import { clsx } from 'clsx';
+import React from 'react';
 
 export interface ImagePreviewProps {
   className?: string;
@@ -21,12 +21,12 @@ function isInline(className: string): boolean {
   return /\binline\b/i.test(className);
 }
 
-function isGoodBadImg(imgMeta: any): boolean {
-  return imgMeta.isGood || imgMeta.isBad;
+function isGoodBadImg(imgMeta: Partial<MateType>): boolean {
+  return !!(imgMeta.isGood || imgMeta.isBad);
 }
 
-function isCompareImg(imgMeta: any): boolean {
-  return isGoodBadImg(imgMeta) || imgMeta.inline;
+function isCompareImg(imgMeta: Partial<MateType>): boolean {
+  return isGoodBadImg(imgMeta) || !!imgMeta.inline;
 }
 
 interface MateType {
