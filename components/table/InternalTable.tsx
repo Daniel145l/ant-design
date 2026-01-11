@@ -312,10 +312,15 @@ const InternalTable = <RecordType extends AnyObject = AnyObject>(
   const rootRef = React.useRef<HTMLDivElement>(null);
   const tblRef = React.useRef<RcReference>(null);
 
-  useProxyImperativeHandle(ref, () => ({
-    ...tblRef.current!,
-    nativeElement: rootRef.current!,
-  }));
+  useProxyImperativeHandle(ref, () => {
+  if (!tblRef.current || !rootRef.current) {
+      return {} as RcReference & { nativeElement: HTMLDivElement };
+    }
+    return {
+      ...tblRef.current,
+      nativeElement: rootRef.current,
+    };
+  });
 
   // ============================ RowKey ============================
   const rowKey = customizeRowKey || table?.rowKey || 'key';
@@ -360,25 +365,29 @@ const InternalTable = <RecordType extends AnyObject = AnyObject>(
       }
 
       // Trigger pagination events
-      if (pagination) {
-        pagination.onChange?.(1, changeInfo.pagination?.pageSize!);
+      if (pagination && changeInfo.pagination?.pageSize) {
+        pagination.onChange?.(1, changeInfo.pagination.pageSize);
       }
     }
 
     if (scroll && scroll.scrollToFirstRowOnChange !== false && internalRefs.body.current) {
+      const bodyElement = internalRefs.body.current;
       scrollTo(0, {
-        getContainer: () => internalRefs.body.current!,
+        getContainer: () => bodyElement,
       });
     }
 
-    onChange?.(changeInfo.pagination!, changeInfo.filters!, changeInfo.sorter!, {
-      currentDataSource: getFilterData(
-        getSortData(rawData, changeInfo.sorterStates!, childrenColumnName),
-        changeInfo.filterStates!,
-        childrenColumnName,
-      ),
-      action,
-    });
+    if (changeInfo.pagination && changeInfo.filters && changeInfo.sorter && 
+        changeInfo.sorterStates && changeInfo.filterStates) {
+      onChange?.(changeInfo.pagination, changeInfo.filters, changeInfo.sorter, {
+        currentDataSource: getFilterData(
+          getSortData(rawData, changeInfo.sorterStates, childrenColumnName),
+          changeInfo.filterStates,
+          childrenColumnName,
+        ),
+        action,
+      });
+    }
   };
 
   /**
@@ -486,7 +495,7 @@ const InternalTable = <RecordType extends AnyObject = AnyObject>(
     warning(current > 0, 'usage', '`current` should be positive number.');
 
     // Dynamic table data
-    if (mergedData.length < total!) {
+    if (typeof total === 'number' && mergedData.length < total) {
       if (mergedData.length > pageSize) {
         warning(
           false,
@@ -541,13 +550,15 @@ const InternalTable = <RecordType extends AnyObject = AnyObject>(
 
   // Customize expandable icon
   mergedExpandable.expandIcon =
-    mergedExpandable.expandIcon || expandIcon || renderExpandIcon(tableLocale!);
+    mergedExpandable.expandIcon || expandIcon || renderExpandIcon(tableLocale || {});
 
   // Adjust expand icon index, no overwrite expandIconColumnIndex if set.
   if (expandType === 'nest' && mergedExpandable.expandIconColumnIndex === undefined) {
     mergedExpandable.expandIconColumnIndex = rowSelection ? 1 : 0;
-  } else if (mergedExpandable.expandIconColumnIndex! > 0 && rowSelection) {
-    mergedExpandable.expandIconColumnIndex! -= 1;
+  } else if (typeof mergedExpandable.expandIconColumnIndex === 'number' && 
+            mergedExpandable.expandIconColumnIndex > 0 && 
+            rowSelection) {
+    mergedExpandable.expandIconColumnIndex -= 1;
   }
 
   // Indent size

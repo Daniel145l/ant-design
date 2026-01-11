@@ -61,6 +61,7 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
+// Comentando para dar um commit
 const dataSource = Array.from({ length: 10 }).map<DataType>((_, i) => ({
   key: i,
   name: 'John Brown',
@@ -77,22 +78,83 @@ const defaultTitle = () => 'Here is title';
 const defaultFooter = () => 'Here is footer';
 
 const App: React.FC = () => {
-  const [bordered, setBordered] = useState(false);
-  const [loading, setLoading] = useState(false);
+  type TableStyleState = {
+    bordered: boolean;
+    loading: boolean;
+  };
+
+  const [styleState, setStyleState] = useState<TableStyleState>({
+    bordered: false,
+    loading: false,
+  });
+
+  const handleBorderChange = (enable: boolean) => {
+    setStyleState(prev => ({ ...prev, bordered: enable }));
+  };
+
+  const handleLoadingChange = (enable: boolean) => {
+    setStyleState(prev => ({ ...prev, loading: enable }));
+  };
   const [size, setSize] = useState<SizeType>('large');
   const [expandable, setExpandable] = useState<ExpandableConfig<DataType> | undefined>(
     defaultExpandable,
   );
-  const [showTitle, setShowTitle] = useState(false);
-  const [showHeader, setShowHeader] = useState(true);
-  const [showFooter, setShowFooter] = useState(true);
+  type TableSectionVisibility = {
+    showTitle: boolean;
+    showHeader: boolean;
+    showFooter: boolean;
+  };
+
+  const [sectionVisibility, setSectionVisibility] = useState<TableSectionVisibility>({
+    showTitle: false,
+    showHeader: true,
+    showFooter: true,
+  });
+
+  const handleTitleChange = (enable: boolean) => {
+    setSectionVisibility(prev => ({ ...prev, showTitle: enable }));
+  };
+
+  const handleHeaderChange = (enable: boolean) => {
+    setSectionVisibility(prev => ({ ...prev, showHeader: enable }));
+  };
+
+  const handleFooterChange = (enable: boolean) => {
+    setSectionVisibility(prev => ({ ...prev, showFooter: enable }));
+  };
   const [rowSelection, setRowSelection] = useState<TableRowSelection<DataType> | undefined>({});
-  const [hasData, setHasData] = useState(true);
+
+  type TableDataState = {
+    hasData: boolean;
+  };
+
+  const [dataState, setDataState] = useState<TableDataState>({
+    hasData: true,
+  });
+
+  const handleDataChange = (newHasData: boolean) => {
+    setDataState(prev => ({ ...prev, hasData: newHasData }));
+  };
   const [tableLayout, setTableLayout] = useState<string>('unset');
   const [top, setTop] = useState<TablePaginationPlacement>('none');
   const [bottom, setBottom] = useState<TablePaginationPlacement>('bottomEnd');
-  const [ellipsis, setEllipsis] = useState(false);
-  const [yScroll, setYScroll] = useState(false);
+  type TableDisplayOptions = {
+    yScroll: boolean;
+    ellipsis: boolean;
+  };
+
+  const [displayOptions, setDisplayOptions] = useState<TableDisplayOptions>({
+    yScroll: false,
+    ellipsis: false,
+  });
+
+  const handleYScrollChange = (enable: boolean) => {
+    setDisplayOptions(prev => ({ ...prev, yScroll: enable }));
+  };
+
+  const handleEllipsisChange = (enable: boolean) => {
+    setDisplayOptions(prev => ({ ...prev, ellipsis: enable }));
+  };
   const [xScroll, setXScroll] = useState<string>('unset');
 
   const handleBorderChange = (enable: boolean) => {

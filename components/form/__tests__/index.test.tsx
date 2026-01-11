@@ -420,12 +420,13 @@ describe('Form', () => {
           block: 'start',
         });
 
-        const inputNode = document.getElementById('scroll_test');
+        const { getByRole } = render(<Demo />);
+
+        const inputNode = getByRole('textbox');
         expect(scrollIntoView).toHaveBeenCalledWith(inputNode, {
           block: 'start',
           scrollMode: 'if-needed',
         });
-      });
     };
 
     // hooks
@@ -545,11 +546,29 @@ describe('Form', () => {
       fireEvent.submit(container.querySelector('form')!);
       await waitFakeTimer();
 
-      const inputNode = document.getElementById('test');
+      const { container, getByRole } = render(
+        <Form scrollToFirstError={{ block: 'center', focus: true }} onFinishFailed={onFinishFailed}>
+          <Form.Item name="test" rules={[{ required: true }]}>
+            <input role="textbox" />
+          </Form.Item>
+          <Form.Item>
+            <Button htmlType="submit">Submit</Button>
+          </Form.Item>
+        </Form>,
+      );
+
+      expect(scrollIntoView).not.toHaveBeenCalled();
+
+      fireEvent.submit(container.querySelector('form')!);
+      await waitFakeTimer();
+
+      const inputNode = getByRole('textbox');
       expect(scrollIntoView).toHaveBeenCalledWith(inputNode, {
         block: 'center',
         scrollMode: 'if-needed',
       });
+
+      expect(inputNode).toHaveFocus();
       expect(onFinishFailed).toHaveBeenCalled();
     });
 
@@ -633,11 +652,26 @@ describe('Form', () => {
       fireEvent.submit(container.querySelector('form')!);
       await waitFakeTimer();
 
-      const inputNode = document.getElementById('test');
-      expect(scrollIntoView).toHaveBeenCalledWith(inputNode, {
-        block: 'center',
-        scrollMode: 'if-needed',
-      });
+      const { container, getByRole } = render(
+      <Form scrollToFirstError={{ block: 'center' }} onFinishFailed={onFinishFailed}>
+        <Form.Item name="test" rules={[{ required: true }]}>
+          <input role="textbox" />
+        </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit">Submit</Button>
+        </Form.Item>
+      </Form>,
+    );
+
+    expect(scrollIntoView).not.toHaveBeenCalled();
+    fireEvent.submit(container.querySelector('form')!);
+    await waitFakeTimer();
+
+    const inputNode = getByRole('textbox');
+    expect(scrollIntoView).toHaveBeenCalledWith(inputNode, {
+      block: 'center',
+      scrollMode: 'if-needed',
+    });
 
       expect(inputNode).toHaveFocus();
     });
