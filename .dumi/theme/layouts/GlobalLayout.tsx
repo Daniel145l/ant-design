@@ -1,4 +1,3 @@
-import React, { useCallback, useEffect } from 'react';
 import {
   createCache,
   extractStyle,
@@ -9,18 +8,19 @@ import {
 } from '@ant-design/cssinjs';
 import { HappyProvider } from '@ant-design/happy-work-theme';
 import { getSandpackCssText } from '@codesandbox/sandpack-react';
-import { theme as antdTheme, App, ConfigProvider } from 'antd';
 import type { MappingAlgorithm } from 'antd';
+import { theme as antdTheme, App, ConfigProvider } from 'antd';
 import type { DirectionType, ThemeConfig } from 'antd/es/config-provider';
 import dayjs from 'dayjs';
 import { createSearchParams, useOutlet, useSearchParams, useServerInsertedHTML } from 'dumi';
+import React, { useCallback, useEffect } from 'react';
 
 import { DarkContext } from '../../hooks/useDark';
 import useLayoutState from '../../hooks/useLayoutState';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { getBannerData } from '../../pages/index/components/util';
-import { ANT_DESIGN_SITE_THEME } from '../common/ThemeSwitch';
 import type { ThemeName } from '../common/ThemeSwitch';
+import { ANT_DESIGN_SITE_THEME } from '../common/ThemeSwitch';
 import SiteThemeProvider from '../SiteThemeProvider';
 import type { SimpleComponentClassNames, SiteContextProps } from '../slots/SiteContext';
 import SiteContext from '../slots/SiteContext';
@@ -223,9 +223,9 @@ const GlobalLayout: React.FC = () => {
     () => ({
       direction,
       updateSiteConfig,
-      theme: theme!,
-      isDark: isDark!,
-      isMobile: isMobile!,
+      theme: theme ?? [],
+      isDark: isDark ?? false,
+      isMobile: isMobile ?? false,
       bannerVisible,
       dynamicTheme,
     }),

@@ -1,4 +1,3 @@
-import React, { use, useRef, useState } from 'react';
 import {
   BgColorsOutlined,
   LinkOutlined,
@@ -7,10 +6,11 @@ import {
   SunOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
-import { Badge, Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
+import { Badge, Button, Dropdown } from 'antd';
 import { CompactTheme, DarkTheme } from 'antd-token-previewer/es/icons';
 import { FormattedMessage, useLocation } from 'dumi';
+import React, { use, useRef, useState } from 'react';
 
 import useLocalStorage from '../../../hooks/useLocalStorage';
 import useThemeAnimation from '../../../hooks/useThemeAnimation';
@@ -108,8 +108,9 @@ const ThemeSwitch: React.FC<ThemeSwitchProps> = () => {
     const { id, icon, key, showBadge, extra, isLink, linkPath } = option;
 
     return {
-      label: isLink ? (
-        <Link to={getLocalizedPathname(linkPath!, isZhCN(pathname), search)}>
+      label:
+       isLink && linkPath ? (
+        <Link to={getLocalizedPathname(linkPath, isZhCN(pathname), search)}>
           <FormattedMessage id={id} />
         </Link>
       ) : (
