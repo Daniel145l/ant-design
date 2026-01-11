@@ -108,7 +108,8 @@ const ThemeSwitch: React.FC<ThemeSwitchProps> = () => {
     const { id, icon, key, showBadge, extra, isLink, linkPath } = option;
 
     return {
-      label: isLink ? (
+      label:
+       isLink && linkPath ? (
         <Link to={getLocalizedPathname(linkPath, isZhCN(pathname), search)}>
           <FormattedMessage id={id} />
         </Link>
