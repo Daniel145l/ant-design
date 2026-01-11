@@ -30,9 +30,9 @@ export type { UploadProps };
 
 export interface UploadRef<T = any> {
   onBatchStart: RcUploadProps['onBatchStart'];
-  onSuccess: (response: any, file: RcFile, xhr: any) => void;
+  onSuccess: (response: unknown, file: RcFile, xhr: XMLHttpRequest) => void;
   onProgress: (e: { percent: number }, file: RcFile) => void;
-  onError: (error: Error, response: any, file: RcFile) => void;
+  onError: (error: Error, response: unknown, file: RcFile) => void;
   fileList: UploadFile<T>[];
   upload: RcUpload | null;
   /**
