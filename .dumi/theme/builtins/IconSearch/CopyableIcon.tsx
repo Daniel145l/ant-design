@@ -1,14 +1,16 @@
-import React from 'react';
 import * as AntdIcons from '@ant-design/icons';
 import { App, Badge } from 'antd';
 import { createStyles } from 'antd-style';
 import copy from 'antd/es/_util/copy';
 import { clsx } from 'clsx';
+import React from 'react';
 
 import useLocale from '../../../hooks/useLocale';
 import type { ThemeType } from './IconSearch';
 
-const allIcons: { [key: PropertyKey]: any } = AntdIcons;
+const allIcons: Record<string, React.ComponentType> = AntdIcons;
+//solução mais simples
+// const allIcons = AntdIcons;
 
 const useStyle = createStyles(({ cssVar, token, css }) => {
   const { antCls, iconCls } = token;

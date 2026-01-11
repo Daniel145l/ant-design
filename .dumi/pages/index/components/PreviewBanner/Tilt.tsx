@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import VanillaTilt from 'vanilla-tilt';
 import type { TiltOptions } from 'vanilla-tilt';
+import VanillaTilt from 'vanilla-tilt';
 
 interface TiltProps extends React.HTMLAttributes<HTMLDivElement> {
   options?: TiltOptions;
@@ -15,6 +15,12 @@ const defaultTiltOptions: TiltOptions = {
   'max-glare': 0.8,
 };
 
+type VanillaTiltElement = HTMLDivElement & {
+  vanillaTilt?: {
+    destroy: () => void;
+  };
+};
+
 const Tilt: React.FC<TiltProps> = ({ options, ...props }) => {
   const node = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -25,7 +31,7 @@ const Tilt: React.FC<TiltProps> = ({ options, ...props }) => {
       });
     }
     return () => {
-      (node.current as any)?.vanillaTilt.destroy();
+      (node.current as VanillaTiltElement)?.vanillaTilt?.destroy();
     };
   }, []);
   return <div ref={node} {...props} />;

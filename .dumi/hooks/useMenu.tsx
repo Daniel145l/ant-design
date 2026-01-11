@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
 import type { MenuProps } from 'antd';
 import { Flex, Tag, version } from 'antd';
 import { createStyles } from 'antd-style';
 import { clsx } from 'clsx';
 import { useFullSidebarData, useSidebarData } from 'dumi';
+import React, { useMemo } from 'react';
 
 import Link from '../theme/common/Link';
 import useLocale from './useLocale';
@@ -67,9 +67,12 @@ const MenuItemLabelWithTag: React.FC<MenuItemLabelProps> = (props) => {
 
   const [locale] = useLocale(locales);
 
+  type LocaleValues = typeof locales[keyof typeof locales];
+
   const getLocale = (name: string) => {
-    return (locale as any)[name.toLowerCase()] ?? name;
-  };
+    const key = name.toLowerCase() as keyof LocaleValues;
+    return locale[key] ?? name;
+  }
 
   if (!before && !after) {
     return (

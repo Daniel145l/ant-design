@@ -35,3 +35,16 @@ declare module '@microflash/rehype-figure';
 declare module 'dekko';
 
 declare module 'csstree-validator';
+
+declare global {
+  interface Window {
+    yuyanMonitor?: {
+      log: (data: {
+        code: number;
+        msg: string;
+      }) => void;
+    };
+  }
+}
+
+export { };

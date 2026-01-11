@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { ColorPicker, Flex, Input } from 'antd';
 import type { ColorPickerProps, GetProp } from 'antd';
+import { ColorPicker, Flex, Input } from 'antd';
 import { createStyles } from 'antd-style';
 import { generateColor } from 'antd/es/color-picker/util';
 import { clsx } from 'clsx';
+import React, { useEffect, useState } from 'react';
 
 import { PRESET_COLORS } from './colorUtil';
 
-type Color = Extract<GetProp<ColorPickerProps, 'value'>, string | { cleared: any }>;
+type Color = Extract<GetProp<ColorPickerProps, 'value'>, string | { cleared: boolean }>;
 
 const useStyle = createStyles(({ cssVar, css }) => ({
   color: css`
