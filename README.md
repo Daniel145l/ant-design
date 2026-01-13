@@ -1,3 +1,11 @@
+## LINKS PARA A DISCIPLINA DE QUALIDADE DE SOFTWARE
+- [Link para o diário](https://drive.google.com/file/d/1LGQFDL2pqudn-IqAA2GR3k8k9wqrdejt/view?usp=sharing)
+- [Link para apresentação](https://drive.google.com/file/d/1XwTKw7SnSLyvGfci8tXOIoagX9eVC_iK/view?usp=sharing)
+
+- *Esses documentos estão nesse repositório também*
+
+---
+
 <div align="center"><a name="readme-top"></a>
 
 <img height="180" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg">
